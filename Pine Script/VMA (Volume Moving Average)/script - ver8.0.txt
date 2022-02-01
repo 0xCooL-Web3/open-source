@@ -1,0 +1,29 @@
+
+//@version=4
+study(title="Volume - Moving Average", shorttitle="VMA", overlay=false, resolution="")
+// src = input(defval=close, title="原始資料", tooltip="默認關閉價格或當前價格", group="Source Data")
+
+//  輸入參數
+len1 = input(defval=20, minval=1, title="快線", tooltip="量均線1", group="Moving Average")
+len2 = input(defval=60, minval=1, title="慢線", tooltip="量均線2", group="Moving Average")
+flag_ema = input(defval=false, title="使用EMA", tooltip="是否使用EMA\n（Exponential Moving Average）", type=input.bool, group="Moving Average")
+show_ma2 = input(defval=false, title="顯示慢線（MA2）", tooltip="是否顯示圖表", type=input.bool, group="Moving Average")
+
+//
+//  MA - Moving Average | EMA - Exponential Moving Average
+//
+ma1 = if flag_ema==1
+    ema(volume, len1)
+else
+    sma(volume, len1)
+
+ma2 = if flag_ema==1
+    ema(volume, len2)
+else
+    sma(volume, len2)
+
+//  輸出 - 交易量
+plotcandle(volume, volume, 0, 0, color=close>open?color.green:color.red, title="VMA")
+//  顯示交易量均線
+plot(ma1, title="MA1", color=color.blue, linewidth=2)
+plot(show_ma2?ma2:na, title="MA2", color=color.yellow, linewidth=2)

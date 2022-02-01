@@ -1,0 +1,44 @@
+
+//@version=4
+study(title="Volume - Moving Average", shorttitle="VMA", overlay=false)
+
+//  Moving Average - 輸入參數（定義交易量均線）
+len1 = input(defval=20, minval=1, type=input.integer, title="快線", tooltip="量均線1", group="Moving Average")
+len2 = input(defval=60, minval=1, type=input.integer, title="慢線", tooltip="量均線2", group="Moving Average")
+flag_ema = input(defval=false, type=input.bool, title="使用EMA", tooltip="是否使用EMA\n（Exponential Moving Average）", group="Moving Average")
+show_ma2 = input(defval=false, type=input.bool, title="顯示慢線", tooltip="是否顯示圖表", group="Moving Average")
+//  Alert - 輸入參數（定義高於或低於交易量均線（快線）多少倍數會顯示提示）
+alert_vol = input(defval=2.0, type=input.float, title="提示倍數", tooltip="可輸入小數\n高於或低於交易量均線（快線）多少倍數會顯示提示", group="提示參數")
+alert_interval = input(defval=3, type=input.integer, title="頻率間隔", tooltip="間隔多少個 bar 才會顯示提示（避免頻繁顯示）", group="提示參數")
+alert_msg_buy = input(defval="爆量交易", type=input.string, title="提示訊息", tooltip="提示訊息", group="提示參數")
+// alert_msg_sell = input(defval="爆量賣出", type=input.string, title="提示訊息", tooltip="提示訊息", group="提示參數")
+
+//
+//  MA - Moving Average | EMA - Exponential Moving Average
+//
+ma1 = if flag_ema==1
+    ema(volume, len1)
+else
+    sma(volume, len1)
+
+ma2 = if flag_ema==1
+    ema(volume, len2)
+else
+    sma(volume, len2)
+
+//  輸出 - 交易量
+plotcandle(volume, volume, 0, 0, color=close>open?color.green:color.red, title="VMA")
+//  顯示交易量均線
+plot(ma1, title="MA1", color=color.blue, linewidth=2)
+plot(show_ma2?ma2:na, title="MA2", color=color.yellow, linewidth=2)
+
+
+//  Alert Calculation
+flag_alert = volume > ma1 * alert_vol
+var current = 0
+
+//  condition = true, display label tooltip and alert(need opening chart)
+if flag_alert and (current==0 or current+alert_interval<=bar_index)
+    alert(alert_msg_buy, alert.freq_once_per_bar)
+    label.new(bar_index, volume+200, alert_msg_buy, color=color.orange, textcolor=color.black)
+    current := bar_index
