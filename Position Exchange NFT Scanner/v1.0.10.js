@@ -484,10 +484,12 @@ let buildList = (options)=>{
 	let filter_list = filterList(list, options);
 	let sorting_list = sortingList(filter_list, options);
 	
+	/*
 	console.log("Filter List: ");
 	console.log(filter_list);
 	console.log("Sorting List: ");
 	console.log(sorting_list);
+	*/
 	
 	console.log(`Total match results: ${sorting_list.length} NFT`);
 	//	notify, if found match with the setting condition
