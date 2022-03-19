@@ -1,4 +1,7 @@
-Scan the Position Exchange NFT  Secondary Market.
+This script is only for running in https://app.position.exchange/nft/marketplace/.
+
+Scan the Position Exchange NFT Secondary Market.
+
 Used pure JavaScript in Browser F12(DevTools) - console to run this script.
 
 support custom setting:
