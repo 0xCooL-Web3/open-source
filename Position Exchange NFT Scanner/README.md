@@ -2,7 +2,7 @@ This script is only for running in https://app.position.exchange/nft/marketplace
 
 Scan the Position Exchange NFT Secondary Market.
 
--Used pure JavaScript in Browser F12(DevTools) - console to run this script.
+- Used pure JavaScript in Browser F12(DevTools) - console to run this script.
 
 support custom setting:
 - filter by "grade, value, price, power, over pay, power price, bit time" with min or max.
