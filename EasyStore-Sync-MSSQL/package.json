@@ -1,0 +1,20 @@
+{
+  "name": "convert-to-csv",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "body-parser": "^1.20.0",
+    "express": "^4.17.3",
+    "imagekit": "^3.2.5",
+    "mssql": "^8.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "0xCooL",
+  "license": "ISC"
+}
